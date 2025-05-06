@@ -1,0 +1,18 @@
+# See https://github.com/facebook/react/pull/33055
+diff --git a/node_modules/react-dom/cjs/react-dom-client.development.js b/node_modules/react-dom/cjs/react-dom-client.development.js
+index d3b730f..656d4fb 100644
+--- a/node_modules/react-dom/cjs/react-dom-client.development.js
++++ b/node_modules/react-dom/cjs/react-dom-client.development.js
+@@ -7954,7 +7954,11 @@
+         console.error(
+           "requestFormReset was called outside a transition or action. To fix, move to an action, or wrap with startTransition."
+         );
+-      var resetStateQueue = ensureFormComponentIsStateful(formFiber).next.queue;
++      var stateHook = ensureFormComponentIsStateful(formFiber);
++      if (stateHook.next == null) {
++        stateHook = formFiber.alternate.memoizedState;
++      }
++      var resetStateQueue = stateHook.next.queue;
+       dispatchSetStateInternal(
+         formFiber,
+         resetStateQueue,
