@@ -11,7 +11,12 @@
     "enabled": true,
   },
   "durable_objects": {
-    "bindings": [],
+    "bindings": [
+      {
+        "name": "SESSION_DURABLE_OBJECT",
+        "class_name": "SessionDurableObject",
+      },
+    ],
   },
   "vars": {
     "WEBAUTHN_APP_NAME": "realm-challenge",
@@ -22,5 +27,11 @@
       "new_sqlite_classes": ["SessionDurableObject"],
     },
   ],
-  "d1_databases": [],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "realm-challenge",
+      "database_id": "realm-challenge",
+    },
+  ],
 }
