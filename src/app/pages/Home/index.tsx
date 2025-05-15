@@ -2,8 +2,8 @@
 
 import { Suspense } from 'react'
 import { listTasks } from './actions'
-import { TaskItem } from './TaskItem'
 import { TaskForm } from './TaskForm'
+import { TaskList } from './TaskList'
 
 export async function HomeContent() {
   const sortedTasks = await listTasks()
@@ -16,9 +16,7 @@ export async function HomeContent() {
       <hr className="my-4" />
       <div className="space-y-4">
         <p className="font-semibold">{`You have ${sortedTasks.length} task${sortedTasks.length == 1 ? '' : 's'}`}</p>
-        {sortedTasks.map((task) => (
-          <TaskItem key={task.id} task={task} />
-        ))}
+        <TaskList sortedTasks={sortedTasks} />
       </div>
     </>
   )
