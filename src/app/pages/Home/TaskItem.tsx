@@ -65,6 +65,9 @@ export function TaskItem({ task }: { task: Task }) {
     setProbability(updatedTask.probability || '')
   }, [])
 
+  const tzoffset = new Date().getTimezoneOffset() * 60000
+  const localISOTime = new Date(new Date(dueAt).getTime() - tzoffset)
+
   return (
     <div data-id={task.id} className="relative border border-neutral-400 p-4 rounded shadow">
       <form ref={updateFormRef} action={onPatch} className="flex flex-col grow">
@@ -88,7 +91,7 @@ export function TaskItem({ task }: { task: Task }) {
               <input
                 name="dueAt"
                 type="datetime-local"
-                value={new Date(dueAt).toISOString().slice(0, 16)}
+                value={new Date(localISOTime).toISOString().slice(0, 16)}
                 onChange={handleChangeDueAt}
                 onBlur={handleFieldBlur}
                 className="outline-0 border border-transparent hover:border-neutral-300 focus:border-neutral-600 rounded"
