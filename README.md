@@ -4,7 +4,7 @@ This is a ~300loc [RedwoodSDK](https://docs.rwsdk.com/) project, using [tailwind
 
 ```shell
 yarn # install dependencies
-echo REMOTE_RESOURCES_PATH=$ask_for_this > .env # you should have received this value. If not, please ask for it
+echo REMOTE_RESOURCES_PATH=$ask_for_this > .dev.vars # you should have received this value. If not, please ask for it
 npx wrangler types # recompute types
 yarn dev # run it locally
 ```
