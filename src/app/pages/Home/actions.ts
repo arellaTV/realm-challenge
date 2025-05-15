@@ -4,7 +4,7 @@ import { env } from 'cloudflare:workers'
 import { adjustProbability } from '@/utils'
 import { Task } from './types'
 
-const remoteResourcesPath = env.REMOTE_RESOURCES_PATH
+const remoteResourcesPath = env.REMOTE_RESOURCES_PATH || import.meta.env.VITE_REMOTE_RESOURCES_PATH
 
 export async function listTasks() {
   const response = await fetch(remoteResourcesPath, {
