@@ -37,10 +37,15 @@ export async function patchTask(formData: FormData) {
   const id = formData.get('id') as string
   const description = formData.get('description') as string
   const probability = adjustProbability(Number(formData.get('probability') as string), description)
+
+  const dueAt = formData.get('dueAt') as string
+  const tzoffset = new Date().getTimezoneOffset() * 60000
+  const utcTime = new Date(new Date(dueAt).getTime() + tzoffset).toISOString().slice(0, 16)
+
   const updatedTask: Partial<Omit<Task, 'id' | 'createdAt'>> = {
     name: formData.get('taskName') as string,
     description,
-    dueAt: formData.get('dueAt') as string,
+    dueAt: utcTime,
     probability,
   }
   await fetch(`${remoteResourcesPath}/${id}`, {

@@ -9,12 +9,15 @@ import { tasksAtom } from './TaskList'
 
 export function TaskItem({ task }: { task: Task }) {
   const updateFormRef = useRef<HTMLFormElement>(null)
-  const [tasks, setTasks] = useAtom(tasksAtom)
+  const [, setTasks] = useAtom(tasksAtom)
 
   const [name, setName] = useState(task.name || '')
   const [description, setDescription] = useState(task.description || '')
   const [dueAt, setDueAt] = useState(task.dueAt || '')
   const [probability, setProbability] = useState(task.probability || '')
+
+  const tzoffset = new Date().getTimezoneOffset() * 60000
+  const localISOTime = new Date(new Date(dueAt).getTime() - tzoffset)
 
   const debouncedSave = useMemo(
     () =>
@@ -76,9 +79,6 @@ export function TaskItem({ task }: { task: Task }) {
     form.set('id', task.id.toString())
     deleteTask(form)
   }
-
-  const tzoffset = new Date().getTimezoneOffset() * 60000
-  const localISOTime = new Date(new Date(dueAt).getTime() - tzoffset)
 
   return (
     <div data-id={task.id} className="relative border border-neutral-400 p-4 rounded shadow">
