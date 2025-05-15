@@ -61,7 +61,8 @@ export function TaskItem({ task }: { task: Task }) {
   }, [])
 
   const onPatch = useCallback(async (formData: FormData) => {
-    await patchTask(formData)
+    const updatedTask = await patchTask(formData)
+    setProbability(updatedTask.probability || '')
   }, [])
 
   const handleDelete = (e: SyntheticEvent) => {
