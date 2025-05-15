@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { createTask } from './actions'
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { useState } from 'react'
 
 export function TaskForm() {
@@ -14,9 +14,9 @@ export function TaskForm() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="cursor-pointer">New Task</Button>
-      </DialogTrigger>
+      <Button className="cursor-pointer" onClick={() => setOpen(true)}>
+        New Task
+      </Button>
       <DialogContent>
         <DialogTitle>Add a New Task</DialogTitle>
         <form action={handleSubmit} className="mb-6 flex flex-col gap-2">
