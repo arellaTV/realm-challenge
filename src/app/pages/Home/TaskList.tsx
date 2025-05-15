@@ -1,11 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { TaskItem } from './TaskItem'
 import { Task } from './types'
+import { atom, useAtom } from 'jotai'
+
+export const tasksAtom = atom<Task[]>([])
 
 export function TaskList({ sortedTasks = [] }: { sortedTasks: Task[] }) {
-  const [tasks, setTasks] = useState(sortedTasks)
+  const [tasks, setTasks] = useAtom(tasksAtom)
+
+  useEffect(() => {
+    setTasks(sortedTasks)
+  }, [setTasks, sortedTasks])
 
   return (
     <>

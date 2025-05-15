@@ -1,12 +1,15 @@
 'use client'
 
-import { ChangeEvent, useCallback, useMemo, useRef, useState } from 'react'
+import { ChangeEvent, SyntheticEvent, useCallback, useMemo, useRef, useState } from 'react'
 import { debounce } from '@/utils'
 import { deleteTask, patchTask } from './actions'
 import { Task } from './types'
+import { useAtom } from 'jotai'
+import { tasksAtom } from './TaskList'
 
 export function TaskItem({ task }: { task: Task }) {
   const updateFormRef = useRef<HTMLFormElement>(null)
+  const [tasks, setTasks] = useAtom(tasksAtom)
 
   const [name, setName] = useState(task.name || '')
   const [description, setDescription] = useState(task.description || '')
@@ -65,6 +68,16 @@ export function TaskItem({ task }: { task: Task }) {
     setProbability(updatedTask.probability || '')
   }, [])
 
+  const handleDelete = (e: SyntheticEvent) => {
+    e.preventDefault()
+    const newTasks = tasks.filter((oldTask) => oldTask.id !== task.id)
+    setTasks(newTasks)
+
+    const form = new FormData()
+    form.set('id', task.id.toString())
+    deleteTask(form)
+  }
+
   const tzoffset = new Date().getTimezoneOffset() * 60000
   const localISOTime = new Date(new Date(dueAt).getTime() - tzoffset)
 
@@ -122,7 +135,7 @@ export function TaskItem({ task }: { task: Task }) {
           />
         </div>
       </form>
-      <form action={deleteTask} className="absolute top-4 right-4">
+      <form onSubmit={handleDelete} className="absolute top-4 right-4">
         <input name="id" hidden value={task.id} readOnly />
         <button className="px-2 py-0.5 border border-red-600 text-red-600 rounded text-xs font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
           {'Remove'}
