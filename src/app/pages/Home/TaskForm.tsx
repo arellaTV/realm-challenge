@@ -14,7 +14,7 @@ export function TaskForm() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button className="cursor-pointer">New Task</Button>
       </DialogTrigger>
       <DialogContent>
