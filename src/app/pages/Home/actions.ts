@@ -24,8 +24,9 @@ export async function createTask(formData: FormData) {
     name: formData.get('taskName') as string,
     description: formData.get('description') as string,
     dueAt: formData.get('dueAt') as string,
-    probability: probability ? Number(probability as string) : null,
+    probability: probability ? Number(probability as string) : 0,
   }
+  console.log({ newTask })
   await fetch(remoteResourcesPath, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
