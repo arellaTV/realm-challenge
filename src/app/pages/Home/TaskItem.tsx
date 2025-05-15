@@ -67,9 +67,11 @@ export function TaskItem({ task }: { task: Task }) {
 
   const handleDelete = (e: SyntheticEvent) => {
     e.preventDefault()
-    const newTasks = tasks.filter((oldTask) => oldTask.id !== task.id)
-    setTasks(newTasks)
 
+    // Remove the task from state first
+    setTasks((oldTaskList) => oldTaskList.filter((oldTask) => oldTask.id !== task.id))
+
+    // Then use the deleteTask action to send a delete API call to persist the change
     const form = new FormData()
     form.set('id', task.id.toString())
     deleteTask(form)
