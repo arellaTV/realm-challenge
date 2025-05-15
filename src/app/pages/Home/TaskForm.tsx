@@ -2,16 +2,24 @@
 
 import { Button } from '@/components/ui/button'
 import { createTask } from './actions'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { useState } from 'react'
 
 export function TaskForm() {
+  const [open, setOpen] = useState(false)
+  const handleSubmit = async (formData: FormData) => {
+    await createTask(formData)
+    setOpen(false)
+  }
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button className="cursor-pointer">New Task</Button>
       </DialogTrigger>
       <DialogContent>
-        <form action={createTask} className="mb-6 flex flex-col gap-2">
+        <DialogTitle>Add a New Task</DialogTitle>
+        <form action={handleSubmit} className="mb-6 flex flex-col gap-2">
           <input
             type="text"
             name="taskName"
