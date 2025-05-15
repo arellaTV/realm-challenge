@@ -10,7 +10,10 @@ export async function HomeContent() {
 
   return (
     <>
-      <TaskForm />
+      <div className="flex justify-end">
+        <TaskForm />
+      </div>
+      <hr className="my-4" />
       <div className="space-y-4">
         <p className="font-semibold">{`You have ${sortedTasks.length} task${sortedTasks.length == 1 ? '' : 's'}`}</p>
         {sortedTasks.map((task) => (
