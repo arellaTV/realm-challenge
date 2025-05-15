@@ -11,12 +11,7 @@
     "enabled": true,
   },
   "durable_objects": {
-    "bindings": [
-      {
-        "name": "SESSION_DURABLE_OBJECT",
-        "class_name": "SessionDurableObject",
-      },
-    ],
+    "bindings": [],
   },
   "vars": {
     "WEBAUTHN_APP_NAME": "realm-challenge",
