@@ -10,28 +10,7 @@
   "observability": {
     "enabled": true,
   },
-  "durable_objects": {
-    "bindings": [
-      {
-        "name": "SESSION_DURABLE_OBJECT",
-        "class_name": "SessionDurableObject",
-      },
-    ],
-  },
   "vars": {
     "WEBAUTHN_APP_NAME": "realm-challenge",
   },
-  "migrations": [
-    {
-      "tag": "v1",
-      "new_sqlite_classes": ["SessionDurableObject"],
-    },
-  ],
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "realm-challenge",
-      "database_id": "realm-challenge",
-    },
-  ],
 }
