@@ -1,7 +1,7 @@
 'use client'
 
 import { ChangeEvent, SyntheticEvent, useCallback, useMemo, useRef, useState } from 'react'
-import { debounce } from '@/utils'
+import { debounce, toLocalDatetimeInputValue } from '@/utils'
 import { deleteTask, patchTask } from './actions'
 import { Task } from './types'
 import { useAtom } from 'jotai'
@@ -15,9 +15,6 @@ export function TaskItem({ task }: { task: Task }) {
   const [description, setDescription] = useState(task.description || '')
   const [dueAt, setDueAt] = useState(task.dueAt || '')
   const [probability, setProbability] = useState(task.probability || '')
-
-  const tzoffset = new Date().getTimezoneOffset() * 60000
-  const localISOTime = new Date(new Date(dueAt).getTime() - tzoffset)
 
   const debouncedSave = useMemo(
     () =>
@@ -45,7 +42,8 @@ export function TaskItem({ task }: { task: Task }) {
 
   const handleChangeDueAt = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setDueAt(event.target.value)
+      const localDate = new Date(event.target.value) // assumes local time
+      setDueAt(localDate.toISOString()) // store as UTC ISO
       debouncedSave()
     },
     [debouncedSave]
@@ -103,7 +101,7 @@ export function TaskItem({ task }: { task: Task }) {
               <input
                 name="dueAt"
                 type="datetime-local"
-                value={new Date(localISOTime).toISOString().slice(0, 16)}
+                value={toLocalDatetimeInputValue(dueAt)}
                 onChange={handleChangeDueAt}
                 onBlur={handleFieldBlur}
                 className="outline-0 border border-transparent hover:border-neutral-300 focus:border-neutral-600 rounded"
