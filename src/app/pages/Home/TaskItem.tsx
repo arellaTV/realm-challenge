@@ -114,7 +114,7 @@ export function TaskItem({ task }: { task: Task }) {
                 type="number"
                 min={0}
                 max={100}
-                value={probability || 0}
+                value={probability}
                 onChange={handleChangeProbability}
                 onBlur={handleFieldBlur}
                 className="outline-0 border border-transparent hover:border-neutral-300 focus:border-neutral-600 rounded"
